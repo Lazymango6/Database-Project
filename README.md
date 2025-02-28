@@ -6,3 +6,5 @@ We want to do a payroll system for a company where we store employee information
 
 We will need payroll calculation, time tracking, and employee management so that we can add/delete employees. 
 
+
+https://github.com/Lazymango6/Database-Project
