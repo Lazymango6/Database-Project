@@ -8,22 +8,27 @@
 </head>
 <body>
     <header>
-        <h1>PayCalc</h1>
+        <h1>PayCalc</h1>h
         <nav>
             <ul>
                 <li><a href="#home" class="active">Home</a></li>
                 <li><a href="login.html">Login</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="admin.html">Admin</a></li>
             </ul>
         </nav>
     </header>
+
+    <section class="container">
+        <img src="paycalc.JPG" alt="HTML5 Icon" width="500" height="250">
+    </section>
     
     <section class="container">
         <h2>PayCalc System</h2>
         <p>PayCalc is a comprehensive payroll management system designed to automate and simplify the payroll process for organizations of all sizes.</p>
         <a href="loginPage.html" class="btn">Get Started</a>
     </section>
-    
+
+
     <section class="container">
         <h2>Key Features</h2>
         <div class="feature-grid">
@@ -39,12 +44,17 @@
                 <h3>Secure Payroll Processing</h3>
                 <p>Ensure confidentiality and accuracy in payroll processing with advanced encryption techniques.</p>
             </div>
-        </div>
+            <div class="feature-card">
+                <h3>Customizable Reports</h3>
+                <p>Generate detailed reports on payroll expenses, employee salaries, and tax deductions.</p>
+            </div>
     </section>
     
     <footer>
         <p>&copy; 2025 PayCalc. All rights reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
     </footer>
+
+    
 
     <style>
         body {
@@ -55,7 +65,7 @@
         }
         header {
             background: #8c1a14;
-            color: white;
+            color: rgb(253, 253, 252);
             padding: 15px;
             text-align: center;
         }
@@ -68,7 +78,7 @@
             margin: 0 15px;
         }
         nav ul li a {
-            color: white;
+            color: rgb(250, 246, 246);
             text-decoration: none;
         }
         .active {
@@ -79,6 +89,7 @@
             margin: auto;
             text-align: center;
             padding: 50px 0;
+            color: rgb(54, 33, 110)
         }
         .feature-grid {
             display: grid;
@@ -87,7 +98,7 @@
             margin-top: 20px;
         }
         .feature-card {
-            background: white;
+            background: rgb(153, 151, 151);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -96,7 +107,7 @@
             display: inline-block;
             padding: 10px 20px;
             background: #0056b3;
-            color: white;
+            color: rgb(252, 250, 250);
             border-radius: 5px;
             text-decoration: none;
         }
