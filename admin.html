@@ -3,11 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayCalc Admin Page</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .card h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .card p {
+            font-size: 20px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .add-employee {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .add-employee input, .add-employee button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 80%;
+        }
+        .add-employee button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
-
 <body>
+    <h1>Admin Dashboard</h1>
+    <div class="dashboard">
+    </div>
     
+    <div class="add-employee">
+        <h2>Add New Employee</h2>
+        <input type="text" placeholder="Employee Name" id="employeeName">
+        <input type="email" placeholder="Employee Email" id="employeeEmail">
+        <button onclick="addEmployee()">Add Employee</button>
+    </div>
+    
+    <script>
+        function addEmployee() {
+            let name = document.getElementById('employeeName').value;
+            let email = document.getElementById('employeeEmail').value;
+            if (name && email) {
+                alert('Employee ' + name + ' added successfully!');
+                document.getElementById('employeeName').value = '';
+                document.getElementById('employeeEmail').value = '';
+            } else {
+                alert('Please enter both name and email.');
+            }
+        }
+    </script>
 </body>
-
+</html>

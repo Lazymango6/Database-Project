@@ -10,7 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('night.jpg') no-repeat;
+    background: url('photo.jpg') no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -18,7 +18,7 @@ body {
 .wrapper {
     width: 420px;
     padding: 20px;
-    background-color: #c34848;
+    background-color: #9ea6b8;
 }
 
 .wrapper h1 {
