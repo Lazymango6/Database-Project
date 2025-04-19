@@ -101,42 +101,38 @@
     
     <div class="container">
         <h2>Enter Employee Information</h2>
-        <form>
+        <form id="addEmployeeForm">
             <div class="form-group">
-                <label>First Name:</label>
-                <input type="text" required>
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" required>
             </div>
             <div class="form-group">
-                <label>Last Name:</label>
-                <input type="text" required>
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" required>
             </div>
             <div class="form-group">
-                <label>Department:</label>
-                <input type="text">
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department">
             </div>
             <div class="form-group">
-                <label>Position:</label>
-                <input type="text">
+                <label for="position">Position:</label>
+                <input type="text" id="position" name="position">
             </div>
             <div class="form-group">
-                <label>Salary:</label>
-                <input type="number" step="0.01">
+                <label for="salary">Salary:</label>
+                <input type="number" step="0.01" id="salary" name="salary">
             </div>
             <div class="form-group">
-                <label>Hourly Rate:</label>
-                <input type="number" step="0.01">
+                <label for="hourly_rate">Hourly Rate:</label>
+                <input type="number" step="0.01" id="hourly_rate" name="hourly_rate">
             </div>
             <div class="form-group">
-                <label>Tax Rate:</label>
-                <input type="number" step="0.01">
-            </div>
-            <div class="form-group">
-                <label>Hire Date:</label>
-                <input type="date">
+                <label for="tax_rate">Tax Rate:</label>
+                <input type="number" step="0.01" id="tax_rate" name="tax_rate">
             </div>
             <button type="submit">Add Employee</button>
-            <button type="button" class="back-btn">Back to Employee List</button>
-        </form>
+            <button type="button" class="back-btn" onclick="window.location.href='employee_list.html'">Back to Employee List</button>
+        </form>        
     </div>
 </body>
 </html>
