@@ -1,12 +1,20 @@
-<form action="employee_list.php" method="POST">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
+<?php
+include 'db.php';
 
-    <label for="department">Department:</label>
-    <input type="text" id="department" name="department" required>
+$sql = "SELECT Employee_ID, Name, Position FROM Employee_info";
+$result = $conn->query($sql);
 
-    <label for="position">Position:</label>
-    <input type="text" id="position" name="position" required>
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>{$row['Employee_ID']}</td>
+                <td>{$row['Name']}</td>
+                <td>{$row['Position']}</td>
+              </tr>";
+    }
+} else {
+    echo "<tr><td colspan='3'>No employees found.</td></tr>";
+}
 
-    <button type="submit">Add Employee</button>
-</form>
+$conn->close();
+?>
