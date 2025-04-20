@@ -89,6 +89,44 @@
         }
     </style>
 </head>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("addEmployeeForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+    
+            const name = document.getElementById("firstName").value + " " + document.getElementById("lastName").value;
+    
+            const data = {
+                name: name,
+                department: document.getElementById("department").value,
+                position: document.getElementById("position").value,
+                salary: document.getElementById("salary").value,
+                hourly_rate: document.getElementById("hourly_rate").value,
+                tax_rate: document.getElementById("tax_rate").value
+            };
+    
+            fetch("http://localhost/PayCalc/Employee/add_employee.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (response.status === "success") {
+                    alert("Employee added successfully!");
+                    document.getElementById("addEmployeeForm").reset();
+                } else {
+                    alert("Error: " + response.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Something went wrong!");
+            });
+        });
+    });
+    </script>
+
 <body>
     <div class="header">Add New Employee</div>
     <div class="nav">
@@ -131,6 +169,7 @@
                 <input type="number" step="0.01" id="tax_rate" name="tax_rate">
             </div>
             <button type="submit">Add Employee</button>
+            <button type="button" class="back-btn" onclick="window.location.href='employee_list.html'">Back to Employee List</button>
         </form>        
     </div>
 </body>

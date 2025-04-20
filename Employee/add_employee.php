@@ -1,22 +1,35 @@
-<form action="add_employee.php" method="POST">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
+<?php
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+include '../db.php';
 
-    <label for="department">Department:</label>
-    <input type="text" id="department" name="department" required>
+$data = json_decode(file_get_contents("php://input"));
 
-    <label for="position">Position:</label>
-    <input type="text" id="position" name="position" required>
+// Debug: Check if we even got any data
+if (!$data) {
+    echo json_encode(["status" => "error", "message" => "Invalid or no JSON data received"]);
+    exit;
+}
 
-    <label for="salary">Salary:</label>
-    <input type="number" id="salary" name="salary" step="0.01" required>
+if (isset($data->name)) {
+    $name = $conn->real_escape_string($data->name);
+    $department = $conn->real_escape_string($data->department ?? '');
+    $position = $conn->real_escape_string($data->position ?? '');
+    $salary = floatval($data->salary ?? 0);
+    $hourly_rate = floatval($data->hourly_rate ?? 0);
+    $tax_rate = floatval($data->tax_rate ?? 0);
 
-    <label for="hourly_rate">Hourly Rate:</label>
-    <input type="number" id="hourly_rate" name="hourly_rate" step="0.01" required>
+    $sql = "INSERT INTO employee_info (Name, Department, Position, Salary, Hourly_Rate, Tax_Rate) 
+            VALUES ('$name', '$department', '$position', $salary, $hourly_rate, $tax_rate)";
 
-    <label for="tax_rate">Tax Rate:</label>
-    <input type="number" id="tax_rate" name="tax_rate" step="0.01" required>
+    if ($conn->query($sql) === TRUE) {
+        echo json_encode(["status" => "success"]);
+    } else {
+        echo json_encode(["status" => "error", "message" => $conn->error]);
+    }
+} else {
+    echo json_encode(["status" => "error", "message" => "Missing name field"]);
+}
+?>
 
-    <button type="submit">Add Employee</button>
-</form>
 
