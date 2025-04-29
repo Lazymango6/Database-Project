@@ -83,7 +83,7 @@ if ($conn->connect_error) {
         <a href="../main.html">Home</a>
         <a href="../Admin/admin.html">Admin Dashboard</a>
         <a href="../Employee/add_employee.html">Add Employee</a>
-        <a href="#">Payroll Calculation</a>
+        <a href="../Admin/calculate_payroll.php">Payroll Calculation</a>
     </div>
     
     <div class="container">
