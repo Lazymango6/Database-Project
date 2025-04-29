@@ -91,12 +91,26 @@
 </head>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        // Fetch the list of users when the page loads
+        fetch("get_users.php")
+            .then(res => res.json())
+            .then(data => {
+                const select = document.getElementById("user-select");
+                data.forEach(user => {
+                    const option = document.createElement("option");
+                    option.value = user.User_ID;
+                    option.textContent = user.Username;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching users:', error));
+
         document.getElementById("addEmployeeForm").addEventListener("submit", function (e) {
             e.preventDefault();
-    
+
             const name = document.getElementById("firstName").value + " " + document.getElementById("lastName").value;
-    
             const data = {
+                user_id: document.getElementById("user-select").value, // Get selected User ID
                 name: name,
                 department: document.getElementById("department").value,
                 position: document.getElementById("position").value,
@@ -104,8 +118,9 @@
                 hourly_rate: document.getElementById("hourly_rate").value,
                 tax_rate: document.getElementById("tax_rate").value
             };
-    
-            fetch("http://localhost/PayCalc/Employee/add_employee.php", {
+
+            // Send the data to the PHP backend to add the employee
+            fetch("add_employee.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
@@ -125,21 +140,25 @@
             });
         });
     });
-    </script>
+</script>
 
 <body>
     <div class="header">Add New Employee</div>
     <div class="nav">
         <a href="../main.html">Home</a>
-        <a href="../../Admin/admin.html">Admin Dashboard</a>
-        <a href="#">Add Employee</a>
-        <a href="#">Delete Employee</a>
-        <a href="#">Payroll Calculation</a>
+        <a href="../Admin/admin.html">Admin Dashboard</a>
+        <a href="../Admin/calculate_payroll.php">Payroll Calculation</a>
     </div>
     
     <div class="container">
         <h2>Enter Employee Information</h2>
         <form id="addEmployeeForm">
+            <div class="form-group">
+                <label for="user-select">Select User:</label>
+                <select id="user-select" name="user_id" required>
+                </select>
+            </div>
+
             <div class="form-group">
                 <label for="firstName">First Name:</label>
                 <input type="text" id="firstName" name="firstName" required>
@@ -169,7 +188,6 @@
                 <input type="number" step="0.01" id="tax_rate" name="tax_rate">
             </div>
             <button type="submit">Add Employee</button>
-            <button type="button" class="back-btn" onclick="window.location.href='employee_list.html'">Back to Employee List</button>
         </form>        
     </div>
 </body>
