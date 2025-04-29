@@ -1,130 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<?php
-session_start();
-
-// Check if the user is logged in and has an employee role
-if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'employee') {
-    header("Location: ../main.html"); // Redirect to home if not an employee
-    exit();
-}
-?>
-
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Dashboard</title>
+    <title>Employee Payroll Dashboard</title>
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background: #f4f4f4;
+            background: #f0f2f5;
             padding: 20px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         header {
-            background: #4674a5;
+            background: #003366;
             color: white;
+            padding: 20px;
             text-align: center;
-            padding: 15px;
-            font-size: 24px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 1.5em;
+            color: #003366;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .paystub-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .paystub {
+            background: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: 0.3s ease;
+        }
+        .paystub:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .paystub h3 {
+            margin-bottom: 15px;
+            color: #004080;
+            font-size: 1.2em;
+        }
+        .paystub p {
+            margin-bottom: 8px;
+            font-size: 0.95em;
+            color: #333;
+        }
+        .summary {
             font-weight: bold;
-            border-radius: 8px 8px 0 0;
-        }
-        .payroll-list {
-            margin-top: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+            font-size: 1.1em;
+            color: #008000;
             margin-top: 10px;
         }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background: #4674a5;
-            color: white;
-        }
-        .download-btn {
-            background: #28a745;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .download-btn:hover {
-            background: #218838;
-        }
         footer {
+            margin-top: auto;
+            padding: 15px;
             text-align: center;
-            margin-top: 20px;
-            padding: 10px;
-            background: #4674a5;
-            color: rgb(248, 243, 243);
-            border-radius: 0 0 8px 8px;
+            background: #003366;
+            color: white;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>Employee Dashboard</header>
-        <h2>Past Payroll Records</h2>
-        <div class="payroll-list">
-            <table>
-                <tr>
-                    <th>Pay Period</th>
-                    <th>Gross Pay</th>
-                    <th>Overtime</th>
-                    <th>Taxes</th>
-                    <th>Deductions</th>
-                    <th>Bonus</th>
-                    <th>Net Pay</th>
-                    <th>Download</th>
-                </tr>
-                <tr>
-                    <td>March 1 - March 15, 2025</td>
-                    <td>$4,000</td>
-                    <td>$120</td>
-                    <td>$740</td>
-                    <td>$100</td>
-                    <td>$0</td>
-                    <td>$3,280</td>
-                    <td><a href="#" class="download-btn">Download PDF</a></td>
-                </tr>
-                <tr>
-                    <td>February 15 - February 28, 2025</td>
-                    <td>$4,000</td>
-                    <td>$100</td>
-                    <td>$740</td>
-                    <td>$100</td>
-                    <td>$300</td>
-                    <td>$3,760</td>
-                    <td><a href="#" class="download-btn">Download PDF</a></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <footer> <a href="../main.html" class="active">Logout</a></footer>
-    <footer>&copy; 2025 PayCalc. All rights reserved.</footer>
+    <header>
+        <h1>Employee Dashboard</h1>
+        <p>Welcome to your personal payroll overview</p>
+    </header>
+
+    <h2>Your Paystubs</h2>
+    <div id="paystub-container" class="paystub-container">Loading payroll data...</div>
+
+    <footer>
+        <p><a href="../main.html">Logout</a></p>
+    </footer>
+
+    <script>
+        fetch('employee_dashboard.php', {
+            credentials: 'include'
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Network response was not ok.");
+            }
+            return res.json();
+        })
+        .then(data => {
+            const container = document.getElementById("paystub-container");
+            container.innerHTML = '';
+
+            if (data.length === 0) {
+                container.innerHTML = '<p>No payroll records found.</p>';
+                return;
+            }
+
+            data.forEach(row => {
+        const div = document.createElement("div");
+        div.classList.add("paystub");
+        div.innerHTML = `
+            <h3>Pay Period: ${row.Pay_Period_Start} to ${row.Pay_Period_End}</h3>
+            <p><strong>Hourly Rate:</strong> $${parseFloat(row.Hourly_Rate).toFixed(2)}</p>
+            <p><strong>Hours Worked:</strong> ${parseFloat(row.Hours_Worked).toFixed(2)} hrs</p>
+            <p><strong>Overtime Hours:</strong> ${parseFloat(row.Overtime_Hours).toFixed(2)} hrs</p>
+            <p><strong>Base Pay:</strong> $${parseFloat(row.BasePay).toFixed(2)}</p>
+            <p><strong>Overtime Pay:</strong> $${parseFloat(row.Overtime_Pay).toFixed(2)}</p>
+            <p><strong>Bonus:</strong> $${parseFloat(row.Bonus).toFixed(2)}</p>
+            <p><strong>Deductions:</strong> $${parseFloat(row.Deductions).toFixed(2)}</p>
+            <p><strong>Taxes:</strong> $${parseFloat(row.Taxes).toFixed(2)}</p>
+            <p class="summary"><strong>Net Pay:</strong> $${parseFloat(row.NetPay).toFixed(2)}</p>
+            <form method="POST" action="generate_paystub.php" target="_blank">
+            <input type="hidden" name="Pay_Period_Start" value="${row.Pay_Period_Start}">
+            <input type="hidden" name="Pay_Period_End" value="${row.Pay_Period_End}">
+            <input type="hidden" name="Hourly_Rate" value="${row.Hourly_Rate}">
+            <input type="hidden" name="Hours_Worked" value="${row.Hours_Worked}">
+            <input type="hidden" name="Overtime_Hours" value="${row.Overtime_Hours}">
+            <input type="hidden" name="BasePay" value="${row.BasePay}">
+            <input type="hidden" name="Overtime_Pay" value="${row.Overtime_Pay}">
+            <input type="hidden" name="Bonus" value="${row.Bonus}">
+            <input type="hidden" name="Deductions" value="${row.Deductions}">
+            <input type="hidden" name="Taxes" value="${row.Taxes}">
+            <input type="hidden" name="NetPay" value="${row.NetPay}">
+            <button type="submit" style="margin-top:10px; padding:10px; background:#0055a5; color:white; border:none; border-radius:6px;">Download Paystub PDF</button>
+        </form>
+    `;
+    container.appendChild(div);
+});
+
+        })
+        .catch(error => {
+            document.getElementById("paystub-container").innerHTML = `<p style="color:red;">Error loading payroll data: ${error.message}</p>`;
+        });
+    </script>
 </body>
 </html>
